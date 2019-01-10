@@ -207,7 +207,10 @@ function sandbox_lib_detect_find_program.main(name, opt)
     -- add default search pathes 
     local pathes = opt.pathes
     if os.host() ~= "windows" then
-        pathes = table.join(table.wrap(pathes), "/usr/local/bin", "/usr/bin")
+        local res = val('env PATH'):split(":")
+        for i,k in ipairs(res) do
+            pathes = table.join(table.wrap(pathes), k)
+        end
     end
 
     -- find executable program
